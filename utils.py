@@ -66,7 +66,7 @@ def atualizar():
     preco = float(input('Informe o novo preço do produto: '))
     quantidade = int(input('Informe a quantidade: '))
 
-    cursor.execute(f"UPDATE produtos SET nome='{nome}, preco={preco}, estoque={quantidade} WHERE id={codigo}")
+    cursor.execute(f"UPDATE produtos SET nome='{nome}', preco={preco}, estoque={quantidade} WHERE idProduto={codigo}")
     conn.commit()
 
     if cursor.rowcount == 1:
@@ -85,7 +85,7 @@ def deletar():
 
     codigo = int(input('Informe o código do produto: '))
 
-    cursor.execute(f'DELETE FROM produtos WHERE id={codigo}')
+    cursor.execute(f'DELETE FROM produtos WHERE idProduto={codigo}')
     conn.commit()
 
     if cursor.rowcount == 1:
@@ -102,17 +102,28 @@ def menu():
     print('2 - Inserir produtos.')
     print('3 - Atualizar produto.')
     print('4 - Deletar produto.')
+    print('5 - Sair.')
     opcao = int(input())
-    if opcao in [1, 2, 3, 4]:
-        if opcao == 1:
-            listar()
-        elif opcao == 2:
-            inserir()
-        elif opcao == 3:
-            atualizar()
-        elif opcao == 4:
-            deletar()
+
+    while True:
+        if opcao in [1, 2, 3, 4, 5]:
+            if opcao == 1:
+                listar()
+                menu()
+            elif opcao == 2:
+                inserir()
+                menu()
+            elif opcao == 3:
+                atualizar()
+                menu()
+            elif opcao == 4:
+                deletar()
+                menu()
         else:
             print('Opção inválida')
-    else:
-        print('Opção inválida')
+        if opcao == 5:
+            print('sair')
+        return False
+
+    
+
